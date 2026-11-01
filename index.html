@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IdeaSphere by Anubhav</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#0b1020;color:#f5f5ff}
+header{padding:22px 7%;display:flex;justify-content:space-between;align-items:center;background:#111831}
+.logo{font-size:23px;font-weight:bold;color:#a78bfa}
+nav a{color:white;text-decoration:none;margin-left:16px}
+.hero{text-align:center;padding:75px 20px;background:linear-gradient(135deg,#171b43,#38216a)}
+.hero h1{font-size:clamp(38px,8vw,64px);margin:0 0 15px}
+.hero h1 span{color:#a78bfa}
+.hero p{color:#d2d2ee;font-size:18px}
+button{background:#8b5cf6;color:white;border:0;padding:13px 22px;border-radius:9px;font-size:16px;cursor:pointer}
+main{max-width:850px;margin:40px auto;padding:0 18px}
+h2{color:#c4b5fd}
+form,.idea{background:#151d35;padding:22px;border-radius:14px;margin:18px 0}
+input,textarea{width:100%;padding:13px;margin:8px 0 15px;border-radius:8px;border:1px solid #444b6a;background:#0b1020;color:white;font-size:16px}
+textarea{min-height:100px}
+.idea h3{color:#c4b5fd}
+.idea p{line-height:1.6;color:#ddd}
+footer{text-align:center;padding:30px;color:#aaa}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">✦ IdeaSphere</div>
+<nav><a href="#ideas">Explore</a><a href="#share">Share an idea</a></nav>
+</header>
+<section class="hero">
+<h1>Your Ideas. <span>Your World.</span></h1>
+<p>Think. Share. Inspire.</p>
+<p>A community where imagination becomes inspiration.</p>
+<a href="#share"><button>Share Your Idea ✨</button></a>
+</section>
+<main>
+<section id="share">
+<h2>Share your brilliant idea</h2>
+<form id="ideaForm">
+<input id="title" placeholder="Give your idea a title" required>
+<textarea id="description" placeholder="Tell everyone about your idea..." required></textarea>
+<button type="submit">Publish Idea</button>
+</form>
+</section>
+<section id="ideas">
+<h2>Community Ideas 💡</h2>
+<div id="feed">
+<article class="idea"><h3>A Greener Tomorrow</h3><p>Imagine neighbourhoods where everyone plants trees and shares a greener future.</p></article>
+<article class="idea"><h3>Learning Without Limits</h3><p>A community where people share skills, knowledge and creative projects.</p></article>
+</div>
+</section>
+</main>
+<footer>Made with creativity by Anubhav · Think. Share. Inspire.</footer>
+<script>
+const form=document.getElementById('ideaForm');
+const feed=document.getElementById('feed');
+let ideas=JSON.parse(localStorage.getItem('ideasphereIdeas')||'[]');
+function showIdeas(){
+ideas.forEach((idea)=>{
+const card=document.createElement('article');
+card.className='idea';
+const heading=document.createElement('h3');
+heading.textContent=idea.title;
+const paragraph=document.createElement('p');
+paragraph.textContent=idea.description;
+card.append(heading,paragraph);
+feed.prepend(card);
+});
+}
+showIdeas();
+form.addEventListener('submit',function(e){
+e.preventDefault();
+const idea={title:document.getElementById('title').value,description:document.getElementById('description').value};
+ideas.unshift(idea);
+localStorage.setItem('ideasphereIdeas',JSON.stringify(ideas));
+const card=document.createElement('article');
+card.className='idea';
+const heading=document.createElement('h3');
+heading.textContent=idea.title;
+const paragraph=document.createElement('p');
+paragraph.textContent=idea.description;
+card.append(heading,paragraph);
+feed.prepend(card);
+form.reset();
+});
+</script>
+</body>
+</html>
